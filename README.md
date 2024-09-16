@@ -4,8 +4,6 @@
 
 ### Ask refining questions
 
-* Requirements that the clients need directly—for example, the ability to send messages in near real-time to friends.  
-* Requirements that are needed indirectly—for example, messaging service performance shouldn’t degrade with increasing user load.
 * Functional requirements: These represent the features a user of the designed system will be able to use. For example, the system will allow a user to search for content using the search bar.
 * Non-functional requirements (NFRs): The non-functional requirements are criteria based on which the user of a system will consider the system usable. NFR may include requirements like high availability, low latency, scalability, and so on.
 
@@ -37,7 +35,7 @@
 
 DNS translates human-readable domain names into machine-readable IP addresses. When designing DNS systems, considerations include:
 
-* **Hierarchy**: The DNS hierarchy is organized in a tree-like structure with several levels:
+* Hierarchy: The DNS hierarchy is organized in a tree-like structure with several levels:
   * Root Level: At the top is the root, represented as a dot (.). The root doesn’t have a specific domain name and is managed by a small number of root servers worldwide.
   * Top-Level Domains (TLDs): These are the next level in the hierarchy, divided into:
     * Generic TLDs (gTLDs): .com, .org, .net, etc.
@@ -46,10 +44,10 @@ DNS translates human-readable domain names into machine-readable IP addresses. W
   * Second-Level Domains: These are directly below the TLDs. For example, in example.com, example is the second-level domain.
   * Subdomains: Below second-level domains, subdomains allow organizations to create their own internal structure. For instance, mail.example.com might be a subdomain for email services.
   * Authoritative DNS Servers: These servers hold the actual DNS records for domains (e.g., A, CNAME, MX records). Once a query reaches these servers, they provide the IP address or the information the client needs.
-* **Caching**: Local and ISP caches improve lookup performance.
-* **Load distribution**: DNS can distribute client requests across multiple servers (e.g., round-robin DNS).
-* **Security**: DNSSEC (DNS Security Extensions) adds authentication to prevent DNS spoofing attacks.
-* **Scalability**: The DNS system must scale as the number of domains and users grows.
+* Caching: Local and ISP caches improve lookup performance.
+* Load distribution: DNS can distribute client requests across multiple servers (e.g., round-robin DNS).
+* Security: DNSSEC (DNS Security Extensions) adds authentication to prevent DNS spoofing attacks.
+* Scalability: The DNS system must scale as the number of domains and users grows.
 
 ---
 
@@ -71,8 +69,8 @@ Load balancers are essential for distributing client requests across multiple se
     * IP Hash: Routing based on client IP.
       * Cookie-based: Load balancer adds a session cookie in the client’s browser to ensure future requests from the same session go to the same server.
       * Session Affinity: The application server generates a session ID, and the load balancer keeps track of this session to route requests accordingly.
-* **Health checks**: Load balancers monitor server health and remove unhealthy servers from the pool.
-* **Scaling**: Horizontal scaling by adding more servers or vertical scaling by upgrading existing servers.
+* Health checks: Load balancers monitor server health and remove unhealthy servers from the pool.
+* Scaling: Horizontal scaling by adding more servers or vertical scaling by upgrading existing servers.
 
 ---
 
@@ -80,9 +78,9 @@ Load balancers are essential for distributing client requests across multiple se
 
 Database design involves choosing the right database type and structure. Consider:
 
-* **Types**: SQL vs. NoSQL databases (e.g., relational vs. document or column-based).
-* **Replication**: Master-slave replication or multi-master replication to ensure availability.
-* **Data locality**: Choosing appropriate storage regions to minimize latency for geographically distributed users.
+* Types: SQL vs. NoSQL databases (e.g., relational vs. document or column-based).
+* Replication: Master-slave replication or multi-master replication to ensure availability.
+* Data locality: Choosing appropriate storage regions to minimize latency for geographically distributed users.
 * CAP Theorem: The CAP theorem states that a distributed system can provide only two of the following three guarantees at any given time:
   * Consistency (C): All nodes see the same data at the same time.
   * Availability (A): Every request receives a response (success/failure), even if some of the system nodes are down.
@@ -133,11 +131,11 @@ Database design involves choosing the right database type and structure. Conside
 
 In a key-value store, data is stored in a simple format with a unique key associated with each value. Additional considerations:
 
-* **Consistency**: Strong consistency vs. eventual consistency in distributed systems.
-* **Partitioning**: Partitioning key-value pairs across multiple nodes to ensure scalability.
-* **Durability**: Persistence of data through replication or disk-based storage.
-* **Data structure**: Some key-value stores (e.g., Redis) allow more complex structures like lists, sets, and hashes.
-* **High availability**: Techniques like replication and leader election ensure availability.
+* Consistency: Strong consistency vs. eventual consistency in distributed systems.
+* Partitioning: Partitioning key-value pairs across multiple nodes to ensure scalability.
+* Durability: Persistence of data through replication or disk-based storage.
+* Data structure: Some key-value stores (e.g., Redis) allow more complex structures like lists, sets, and hashes.
+* High availability: Techniques like replication and leader election ensure availability.
 
 ---
 
@@ -145,11 +143,11 @@ In a key-value store, data is stored in a simple format with a unique key associ
 
 CDNs improve content delivery by caching assets closer to users. Factors include:
 
-* **Caching**: CDN nodes cache content to reduce load on origin servers and lower latency.
-* **Geographical distribution**: CDN nodes (also called edge servers) are distributed worldwide to serve users from the closest location.
-* **Failover**: In case a CDN node fails, traffic can be rerouted to the nearest available node.
-* **Cache invalidation**: Policies for refreshing or purging cached content to ensure users receive updated data.
-* **Security**: Some CDNs offer DDoS protection, SSL offloading, and protection against attacks on content servers.
+* Caching: CDN nodes cache content to reduce load on origin servers and lower latency.
+* Geographical distribution: CDN nodes (also called edge servers) are distributed worldwide to serve users from the closest location.
+* Failover: In case a CDN node fails, traffic can be rerouted to the nearest available node.
+* Cache invalidation: Policies for refreshing or purging cached content to ensure users receive updated data.
+* Security: Some CDNs offer DDoS protection, SSL offloading, and protection against attacks on content servers.
 
 ---
 
@@ -157,10 +155,10 @@ CDNs improve content delivery by caching assets closer to users. Factors include
 
 A sequencer generates unique identifiers, ensuring order and causality in distributed systems. Key concepts:
 
-* **Centralized vs. decentralized**: Centralized sequencers (single source of truth) vs. decentralized ones (using distributed algorithms like Lamport timestamps).
-* **Global vs. local IDs**: Global unique IDs (UUIDs) vs. localized IDs generated for specific regions.
-* **Order preservation**: Ensuring IDs are generated in the correct order to maintain consistency across distributed systems.
-* **Performance**: Optimization of sequencer throughput to handle high volumes of requests.
+* Centralized vs. decentralized: Centralized sequencers (single source of truth) vs. decentralized ones (using distributed algorithms like Lamport timestamps).
+* Global vs. local IDs: Global unique IDs (UUIDs) vs. localized IDs generated for specific regions.
+* Order preservation: Ensuring IDs are generated in the correct order to maintain consistency across distributed systems.
+* Performance: Optimization of sequencer throughput to handle high volumes of requests.
 
 ---
 
@@ -168,11 +166,11 @@ A sequencer generates unique identifiers, ensuring order and causality in distri
 
 Monitoring tracks system health and provides real-time alerts for issues. Considerations:
 
-* **Metrics**: CPU usage, memory, disk I/O, network latency, and error rates.
-* **Alerting**: Configurable alerts based on thresholds for critical metrics.
-* **Logs**: Collection and analysis of logs for troubleshooting and auditing.
-* **Uptime**: Monitoring server availability, including failure detection and recovery.
-* **Tools**: Tools like Prometheus, Grafana, or ELK stack for visualization and alerting.
+* Metrics: CPU usage, memory, disk I/O, network latency, and error rates.
+* Alerting: Configurable alerts based on thresholds for critical metrics.
+* Logs: Collection and analysis of logs for troubleshooting and auditing.
+* Uptime: Monitoring server availability, including failure detection and recovery.
+* Tools: Tools like Prometheus, Grafana, or ELK stack for visualization and alerting.
 
 ---
 
@@ -180,11 +178,11 @@ Monitoring tracks system health and provides real-time alerts for issues. Consid
 
 Distributed caches improve performance by reducing data retrieval times. Key concepts:
 
-* **Cache invalidation**: Managing cache expiry to ensure fresh data.
-* **Cache consistency**: Maintaining cache coherence across distributed nodes.
-* **Eviction policies**: Policies like LRU (Least Recently Used) or LFU (Least Frequently Used) to remove stale data.
-* **Cache warming**: Preloading frequently accessed data to improve initial performance.
-* **Scalability**: Adding nodes to the cache cluster to handle increased load.
+* Cache invalidation: Managing cache expiry to ensure fresh data.
+* Cache consistency: Maintaining cache coherence across distributed nodes.
+* Eviction policies: Policies like LRU (Least Recently Used) or LFU (Least Frequently Used) to remove stale data.
+* Cache warming: Preloading frequently accessed data to improve initial performance.
+* Scalability: Adding nodes to the cache cluster to handle increased load.
 
 ---
 
@@ -241,11 +239,11 @@ Common examples of Pub-Sub systems include Google Pub/Sub, Amazon SNS, Apache Ka
 
 Rate limiters control how frequently users can access services to prevent abuse. Considerations include:
 
-* **Algorithm**: Token bucket, leaky bucket, or fixed window counters.
-* **Granularity**: Setting limits per user, per IP, or per service.
-* **Throttling**: Gradually slowing down users as they approach their limit, or blocking them once the limit is exceeded.
-* **Distributed rate limiting**: Handling rate limits across multiple servers or regions.
-* **Burst handling**: Allowing short bursts of high traffic while maintaining long-term limits.
+* Algorithm: Token bucket, leaky bucket, or fixed window counters.
+* Granularity: Setting limits per user, per IP, or per service.
+* Throttling: Gradually slowing down users as they approach their limit, or blocking them once the limit is exceeded.
+* Distributed rate limiting: Handling rate limits across multiple servers or regions.
+* Burst handling: Allowing short bursts of high traffic while maintaining long-term limits.
 
 ---
 
@@ -253,11 +251,11 @@ Rate limiters control how frequently users can access services to prevent abuse.
 
 A blob (binary large object) store handles unstructured data. Key factors:
 
-* **Storage**: Efficient storage for large files, such as images, videos, and backups.
-* **Scalability**: Support for scaling storage as data volumes grow.
-* **Metadata**: Associating metadata with each blob to improve organization and retrieval.
-* **Access control**: Ensuring secure access to stored blobs, including public/private ACLs.
-* **Versioning**: Tracking changes to blobs and maintaining previous versions if needed.
+* Storage: Efficient storage for large files, such as images, videos, and backups.
+* Scalability: Support for scaling storage as data volumes grow.
+* Metadata: Associating metadata with each blob to improve organization and retrieval.
+* Access control: Ensuring secure access to stored blobs, including public/private ACLs.
+* Versioning: Tracking changes to blobs and maintaining previous versions if needed.
 
 ---
 
@@ -265,11 +263,11 @@ A blob (binary large object) store handles unstructured data. Key factors:
 
 Distributed search engines index and query data across multiple servers. Key design points:
 
-* **Crawling**: Crawling the web or dataset to collect relevant content.
-* **Indexing**: Creating an inverted index for efficient lookups.
-* **Ranking**: Algorithms for ranking results based on relevance.
-* **Fault tolerance**: Ensuring search continues even if a node fails.
-* **Sharding**: Partitioning the index to distribute the load across multiple servers.
+* Crawling: Crawling the web or dataset to collect relevant content.
+* Indexing: Creating an inverted index for efficient lookups.
+* Ranking: Algorithms for ranking results based on relevance.
+* Fault tolerance: Ensuring search continues even if a node fails.
+* Sharding: Partitioning the index to distribute the load across multiple servers.
 
 ---
 
@@ -277,11 +275,11 @@ Distributed search engines index and query data across multiple servers. Key des
 
 Distributed logging captures events from across the system. Key considerations:
 
-* **Log aggregation**: Centralized collection of logs from multiple services.
-* **Log indexing**: Making logs searchable for real-time troubleshooting.
-* **Scalability**: Handling large volumes of log data efficiently.
-* **Retention policies**: Managing log storage by removing older logs or archiving them.
-* **Security**: Encrypting logs and ensuring access control to protect sensitive information.
+* Log aggregation: Centralized collection of logs from multiple services.
+* Log indexing: Making logs searchable for real-time troubleshooting.
+* Scalability: Handling large volumes of log data efficiently.
+* Retention policies: Managing log storage by removing older logs or archiving them.
+* Security: Encrypting logs and ensuring access control to protect sensitive information.
 
 ---
 
@@ -289,11 +287,11 @@ Distributed logging captures events from across the system. Key considerations:
 
 A distributed task scheduler allocates resources to tasks across nodes. Important points:
 
-* **Task dependencies**: Managing task dependencies and execution order.
-* **Resource allocation**: Efficiently distributing resources (e.g., CPU, memory) to tasks.
-* **Fault tolerance**: Handling task retries and failure recovery.
-* **Concurrency**: Executing multiple tasks in parallel where possible.
-* **Load balancing**: Ensuring no single node is overloaded with tasks.
+* Task dependencies: Managing task dependencies and execution order.
+* Resource allocation: Efficiently distributing resources (e.g., CPU, memory) to tasks.
+* Fault tolerance: Handling task retries and failure recovery.
+* Concurrency: Executing multiple tasks in parallel where possible.
+* Load balancing: Ensuring no single node is overloaded with tasks.
 
 ---
 
@@ -301,10 +299,10 @@ A distributed task scheduler allocates resources to tasks across nodes. Importan
 
 Sharded counters distribute counting load across multiple nodes. Key features:
 
-* **Concurrency**: Handling high volumes of concurrent updates (e.g., likes on social media posts).
-* **Sharding strategy**: Distributing counters across shards to avoid bottlenecks.
-* **Consistency**: Ensuring counters are accurate despite being updated across multiple nodes.
-* **Latency**: Reducing the time it takes to increment/decrement counters.
-* **Recovery**: Ensuring counters are recoverable after failures.
+* Concurrency: Handling high volumes of concurrent updates (e.g., likes on social media posts).
+* Sharding strategy: Distributing counters across shards to avoid bottlenecks.
+* Consistency: Ensuring counters are accurate despite being updated across multiple nodes.
+* Latency: Reducing the time it takes to increment/decrement counters.
+* Recovery: Ensuring counters are recoverable after failures.
 
 ---
