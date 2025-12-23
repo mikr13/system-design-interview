@@ -1,36 +1,5 @@
 # How to answer system design questions
 
-Table of Contents
-
-- [How to perform well](#how-to-perform-well)
-  - [Ask refining questions](#ask-refining-questions)
-  - [Handle data](#handle-data)
-  - [Discuss the components](#discuss-the-components)
-  - [Discuss trade-offs](#discuss-trade-offs)
-- [Building blocks](#building-blocks)
-  - [Vertical vs. Horizontal Scaling](#vertical-vs-horizontal-scaling)
-  - [Preprocessing & Cron Jobs](#preprocessing--cron-jobs)
-  - [Backups & Replication](#backups--replication)
-  - [Microservices vs. Monoliths vs Distributed Systems](#microservices-vs-monoliths-vs-distributed-systems)
-  - [Domain Name System (DNS)](#domain-name-system-dns)
-  - [Load Balancers](#load-balancers)
-  - [Decoupling services](#decoupling-services)
-  - [Databases](#databases)
-  - [Key-Value Store](#key-value-store)
-  - [Content Delivery Network (CDN)](#content-delivery-network-cdn)
-  - [Sequencer](#sequencer)
-  - [Service Monitoring](#service-monitoring)
-  - [Observability](#observability)
-  - [Distributed Caching](#distributed-caching)
-  - [Distributed Messaging Queue](#distributed-messaging-queue)
-  - [Publish-Subscribe System](#publish-subscribe-system)
-  - [Rate Limiter](#rate-limiter)
-  - [Blob Store](#blob-store)
-  - [Distributed Search](#distributed-search)
-  - [Distributed Logging](#distributed-logging)
-  - [Distributed Task Scheduling](#distributed-task-scheduling)
-  - [Sharded Counters](#sharded-counters)
-
 ## How to perform well
 
 ### Ask refining questions
