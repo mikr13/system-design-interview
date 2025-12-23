@@ -14,11 +14,13 @@ Table of Contents
   - [Microservices vs. Monoliths vs Distributed Systems](#microservices-vs-monoliths-vs-distributed-systems)
   - [Domain Name System (DNS)](#domain-name-system-dns)
   - [Load Balancers](#load-balancers)
+  - [Decoupling services](#decoupling-services)
   - [Databases](#databases)
   - [Key-Value Store](#key-value-store)
   - [Content Delivery Network (CDN)](#content-delivery-network-cdn)
   - [Sequencer](#sequencer)
   - [Service Monitoring](#service-monitoring)
+  - [Observability](#observability)
   - [Distributed Caching](#distributed-caching)
   - [Distributed Messaging Queue](#distributed-messaging-queue)
   - [Publish-Subscribe System](#publish-subscribe-system)
@@ -64,6 +66,7 @@ Table of Contents
 
 - Vertical Scaling: Involves adding more resources (CPU, RAM, storage) to a single server to handle increased load. It is simpler to implement but has limitations in terms of maximum capacity and can lead to a single point of failure.
 - Horizontal Scaling: Involves adding more servers to a system to distribute the load. It is more complex to implement but offers better scalability, fault tolerance, and redundancy.
+- In practice, a combination of both vertical and horizontal scaling is often used to optimize performance and cost-efficiency. Take Inter process communication & Consistency from vertical scaling, and Scaling, Fault tolerance & Load balancing from horizontal scaling.
 
 ### Preprocessing & Cron Jobs
 
@@ -107,16 +110,36 @@ Load balancers are essential for distributing client requests across multiple se
 - Load Balancing Algorithms:
   - Round-Robin: Each request is sent to the next server in line. This is simple but may not consider the server's load.
   - Least Connections: The load balancer sends requests to the server with the fewest active connections, making it effective in environments where some requests are more resource-intensive than others.
-  - IP Hash: The client’s IP address is hashed, and the result is used to assign the client to a particular server, providing session persistence across requests.
+  - IP Hash: The client’s IP address is hashed, and the result is used to assign the client to a particular server, providing session persistence across requests. (Hash value / number of servers = server index)
+  - Request ID Hash: Similar to IP Hash, but uses a unique request ID to ensure that requests from the same session are routed to the same server.
   - Weighted Round-Robin: Servers are assigned weights based on their capacity. A higher-capacity server will handle more requests compared to a lower-capacity one.
 - Session Persistence (Sticky Sessions):
   - Some applications require that all requests from a single client are routed to the same server to maintain session state (e.g., user login).
+  - Also if you add more servers to the pool, sticky sessions can help ensure that existing sessions remain intact.
   - Methods for Sticky Sessions:
     - IP Hash: Routing based on client IP.
       - Cookie-based: Load balancer adds a session cookie in the client’s browser to ensure future requests from the same session go to the same server.
-      - Session Affinity: The application server generates a session ID, and the load balancer keeps track of this session to route requests accordingly.
+      - Session Affinity: The application server generates a session, and the load balancer keeps track of this session to route requests accordingly.
 - Health checks: Load balancers monitor server health and remove unhealthy servers from the pool.
 - Scaling: Horizontal scaling by adding more servers or vertical scaling by upgrading existing servers.
+
+#### Consistent Hashing
+
+Consistent hashing is a technique used in distributed systems to distribute data across a cluster of nodes in a way that minimizes reorganization when nodes are added or removed. It is particularly useful for load balancing and caching. Main concepts include:
+
+- Hash Ring: Nodes are arranged in a circular hash space (0 to 2^32-1). Each node is assigned a position on the ring based on its hash value.
+- Data Assignment: Each data item is hashed to a position on the ring, and it is assigned to the first node that is encountered when moving clockwise around the ring.
+- Node Addition/Removal: When a node is added or removed, only a small portion of the data needs to be reassigned to different nodes, minimizing disruption.
+- Virtual Nodes: To improve load balancing, each physical node can be represented by multiple virtual nodes on the hash ring. This helps distribute data more evenly across the cluster. So use multiple hash functions to map a single node to multiple points on the hash ring.
+
+### Decoupling services
+
+Decoupling services involves designing systems so that components can operate independently, reducing dependencies and improving scalability and maintainability. Techniques include:
+
+- API Gateways: Serve as a single entry point for multiple services, handling requests and routing them to the appropriate service.
+- Service Discovery: Allows services to find and communicate with each other without hardcoding addresses.
+- Message Queues: Enable asynchronous communication between services, allowing them to operate independently.
+- Load Balancers: Distribute incoming requests across multiple instances of a service to ensure availability and scalability.
 
 ### Databases
 
@@ -207,6 +230,19 @@ Monitoring tracks system health and provides real-time alerts for issues. Consid
 - Logs: Collection and analysis of logs for troubleshooting and auditing.
 - Uptime: Monitoring server availability, including failure detection and recovery.
 - Tools: Tools like Prometheus, Grafana, or ELK stack for visualization and alerting.
+
+### Observability
+
+Observability is the ability to understand the internal state of a system based on its external outputs. Key components include:
+
+- Metrics: Quantitative data that provides insights into system performance (e.g., CPU usage, memory consumption, request rates).
+- Logs: Detailed records of events that occur within the system, useful for debugging and auditing.
+- Traces: End-to-end tracking of requests as they flow through various services, helping to identify bottlenecks and latency issues. Usually paired with a Request ID to correlate logs and metrics.
+- Instrumentation: The process of adding code to applications to collect observability data.
+- Dashboards: Visual representations of metrics, logs, and traces to provide a comprehensive view of system health.
+- Alerting: Automated notifications based on predefined thresholds to inform teams of potential issues.
+- Correlation: The ability to link metrics, logs, and traces to provide a holistic view of system behavior.
+- Distributed Tracing: A method to track requests as they propagate through distributed systems, providing insights into performance and latency across services.
 
 ### Distributed Caching
 
