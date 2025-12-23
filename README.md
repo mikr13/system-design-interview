@@ -8,6 +8,10 @@ Table of Contents
   - [Discuss the components](#discuss-the-components)
   - [Discuss trade-offs](#discuss-trade-offs)
 - [Building blocks](#building-blocks)
+  - [Vertical vs. Horizontal Scaling](#vertical-vs-horizontal-scaling)
+  - [Preprocessing & Cron Jobs](#preprocessing--cron-jobs)
+  - [Backups & Replication](#backups--replication)
+  - [Microservices vs. Monoliths vs Distributed Systems](#microservices-vs-monoliths-vs-distributed-systems)
   - [Domain Name System (DNS)](#domain-name-system-dns)
   - [Load Balancers](#load-balancers)
   - [Databases](#databases)
@@ -56,6 +60,25 @@ Table of Contents
 
 ## Building blocks
 
+### Vertical vs. Horizontal Scaling
+
+- Vertical Scaling: Involves adding more resources (CPU, RAM, storage) to a single server to handle increased load. It is simpler to implement but has limitations in terms of maximum capacity and can lead to a single point of failure.
+- Horizontal Scaling: Involves adding more servers to a system to distribute the load. It is more complex to implement but offers better scalability, fault tolerance, and redundancy.
+
+### Preprocessing & Cron Jobs
+
+Preprocessing involves preparing data before it is used by the main application. This can include tasks like data cleaning, transformation, and aggregation. It can be done at non-peak hours to reduce the load on the main system. Cron jobs are scheduled tasks that run at specific intervals. They can be used for various purposes, such as: ETL (Extract, Transform, Load) processes, sending out periodic reports, or performing routine maintenance tasks like database backups.
+
+### Backups & Replication
+
+Backups are copies of data stored separately to protect against data loss. Regular backups should be scheduled, and multiple versions should be kept to allow recovery from different points in time. Replication involves creating copies of data across multiple servers or locations to ensure high availability and fault tolerance. Common replication strategies include master-slave replication (one primary server with multiple read-only replicas) and multi-master replication (multiple servers that can handle both reads and writes).
+
+### Microservices vs. Monoliths vs Distributed Systems
+
+- Monolithic Architecture: In a monolithic architecture, all components of the application are tightly integrated into a single codebase. This can simplify development and deployment but can lead to challenges in scaling, maintaining, and updating the application as it grows.
+- Microservices Architecture: In a microservices architecture, the application is divided into smaller, independent services that communicate with each other through APIs. This allows for better scalability, flexibility, and maintainability, as each service can be developed, deployed, and scaled independently. However, it introduces complexity in terms of service discovery, inter-service communication, and data consistency. Often only the services that require independent scaling due to high load are designed as microservices, while others remain part of the monolith.
+- Distributed Systems: A distributed system is a collection of independent computers that work together to provide a unified service. This architecture is designed to handle large-scale applications that require high availability, fault tolerance, and scalability. Distributed systems can be more complex to design and manage due to issues like network latency, data consistency, and fault tolerance. Generally, a distributed system will consist of multiple microservices working together across different nodes/zones/regions.
+
 ### Domain Name System (DNS)
 
 DNS translates human-readable domain names into machine-readable IP addresses. When designing DNS systems, considerations include:
@@ -73,8 +96,6 @@ DNS translates human-readable domain names into machine-readable IP addresses. W
 - Load distribution: DNS can distribute client requests across multiple servers (e.g., round-robin DNS).
 - Security: DNSSEC (DNS Security Extensions) adds authentication to prevent DNS spoofing attacks.
 - Scalability: The DNS system must scale as the number of domains and users grows.
-
----
 
 ### Load Balancers
 
@@ -96,8 +117,6 @@ Load balancers are essential for distributing client requests across multiple se
       - Session Affinity: The application server generates a session ID, and the load balancer keeps track of this session to route requests accordingly.
 - Health checks: Load balancers monitor server health and remove unhealthy servers from the pool.
 - Scaling: Horizontal scaling by adding more servers or vertical scaling by upgrading existing servers.
-
----
 
 ### Databases
 
@@ -150,8 +169,6 @@ Database design involves choosing the right database type and structure. Conside
       - Scalability: Not as scalable as horizontal partitioning.
       - Increased complexity: Requires careful design to ensure data is distributed evenly.
 
----
-
 ### Key-Value Store
 
 In a key-value store, data is stored in a simple format with a unique key associated with each value. Additional considerations:
@@ -161,8 +178,6 @@ In a key-value store, data is stored in a simple format with a unique key associ
 - Durability: Persistence of data through replication or disk-based storage.
 - Data structure: Some key-value stores (e.g., Redis) allow more complex structures like lists, sets, and hashes.
 - High availability: Techniques like replication and leader election ensure availability.
-
----
 
 ### Content Delivery Network (CDN)
 
@@ -174,8 +189,6 @@ CDNs improve content delivery by caching assets closer to users. Factors include
 - Cache invalidation: Policies for refreshing or purging cached content to ensure users receive updated data.
 - Security: Some CDNs offer DDoS protection, SSL offloading, and protection against attacks on content servers.
 
----
-
 ### Sequencer
 
 A sequencer generates unique identifiers, ensuring order and causality in distributed systems. Key concepts:
@@ -184,8 +197,6 @@ A sequencer generates unique identifiers, ensuring order and causality in distri
 - Global vs. local IDs: Global unique IDs (UUIDs) vs. localized IDs generated for specific regions.
 - Order preservation: Ensuring IDs are generated in the correct order to maintain consistency across distributed systems.
 - Performance: Optimization of sequencer throughput to handle high volumes of requests.
-
----
 
 ### Service Monitoring
 
@@ -197,8 +208,6 @@ Monitoring tracks system health and provides real-time alerts for issues. Consid
 - Uptime: Monitoring server availability, including failure detection and recovery.
 - Tools: Tools like Prometheus, Grafana, or ELK stack for visualization and alerting.
 
----
-
 ### Distributed Caching
 
 Distributed caches improve performance by reducing data retrieval times. Key concepts:
@@ -208,8 +217,6 @@ Distributed caches improve performance by reducing data retrieval times. Key con
 - Eviction policies: Policies like LRU (Least Recently Used) or LFU (Least Frequently Used) to remove stale data.
 - Cache warming: Preloading frequently accessed data to improve initial performance.
 - Scalability: Adding nodes to the cache cluster to handle increased load.
-
----
 
 ### Distributed Messaging Queue
 
@@ -231,8 +238,6 @@ Distributed messaging queues decouple producers (services sending messages) and 
   - Message Partitioning: Messages are partitioned across multiple nodes to improve scalability.
   - Message Replication: Messages are replicated across multiple nodes to ensure availability.
   - Message Compression: Messages are compressed to reduce storage and network usage.
-
----
 
 ### Publish-Subscribe System
 
@@ -258,8 +263,6 @@ Key Concepts:
 
 Common examples of Pub-Sub systems include Google Pub/Sub, Amazon SNS, Apache Kafka, and Redis Pub/Sub.
 
----
-
 ### Rate Limiter
 
 Rate limiters control how frequently users can access services to prevent abuse. Considerations include:
@@ -269,8 +272,6 @@ Rate limiters control how frequently users can access services to prevent abuse.
 - Throttling: Gradually slowing down users as they approach their limit, or blocking them once the limit is exceeded.
 - Distributed rate limiting: Handling rate limits across multiple servers or regions.
 - Burst handling: Allowing short bursts of high traffic while maintaining long-term limits.
-
----
 
 ### Blob Store
 
@@ -282,8 +283,6 @@ A blob (binary large object) store handles unstructured data. Key factors:
 - Access control: Ensuring secure access to stored blobs, including public/private ACLs.
 - Versioning: Tracking changes to blobs and maintaining previous versions if needed.
 
----
-
 ### Distributed Search
 
 Distributed search engines index and query data across multiple servers. Key design points:
@@ -293,8 +292,6 @@ Distributed search engines index and query data across multiple servers. Key des
 - Ranking: Algorithms for ranking results based on relevance.
 - Fault tolerance: Ensuring search continues even if a node fails.
 - Sharding: Partitioning the index to distribute the load across multiple servers.
-
----
 
 ### Distributed Logging
 
@@ -306,8 +303,6 @@ Distributed logging captures events from across the system. Key considerations:
 - Retention policies: Managing log storage by removing older logs or archiving them.
 - Security: Encrypting logs and ensuring access control to protect sensitive information.
 
----
-
 ### Distributed Task Scheduling
 
 A distributed task scheduler allocates resources to tasks across nodes. Important points:
@@ -317,8 +312,6 @@ A distributed task scheduler allocates resources to tasks across nodes. Importan
 - Fault tolerance: Handling task retries and failure recovery.
 - Concurrency: Executing multiple tasks in parallel where possible.
 - Load balancing: Ensuring no single node is overloaded with tasks.
-
----
 
 ### Sharded Counters
 
